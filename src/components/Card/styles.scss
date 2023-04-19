@@ -35,7 +35,12 @@
     display: flex;
   }
 }
-
-$collapse-btn-size: 20px;
-
-// .collapse-btn {}
+.copy-btn {
+  font-size: 0.7rem;
+  padding: 0.2rem !important;
+  border: 1px solid #333 !important;
+  border-radius: 5px !important;
+  &:active {
+    color: pink !important;
+  }
+}
