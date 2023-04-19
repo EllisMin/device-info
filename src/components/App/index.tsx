@@ -4,6 +4,7 @@ import './styles.scss'
 import { isMobile } from 'react-device-detect'
 import { Section } from '../Section'
 import moment from 'moment-timezone'
+import platform from 'platform'
 
 type Geolocation = {
   country_name: string
@@ -34,6 +35,7 @@ function App() {
     const navigator = window && window.navigator ? window.navigator : null
     console.log(`navigator//: `, navigator)
     setNavigator(navigator)
+    console.log(`platform//: `, platform)
 
     // Get ip
     const fetchIp = async () => {
@@ -88,10 +90,21 @@ function App() {
   return (
     <div className="App">
       <h3>Your device information</h3>
-      <Card
-        title={'Device type'}
-        description={isMobile ? 'Mobile' : 'Desktop (non-mobile)'}
-      />
+      <Section>
+        <Card
+          title={'Device type'}
+          description={isMobile ? 'Mobile' : 'Desktop (non-mobile)'}
+        />
+        <Card title={'Platform name'} description={platform.name} />
+        <Card title={'Platform os'} description={platform.os} />
+        <Card title={'Platform version'} description={platform.version} />
+        <Card
+          title={'Platform description'}
+          description={platform.description}
+        />
+        {/* <Card title={'Platform layout'} description={platform.layout} /> */}
+        <Card title={'User Agent'} description={navigator?.userAgent} />
+      </Section>
       <Section>
         <Card title={'IP address (IPv4)'} description={`${geolocation?.ip}`} />
         <Card
@@ -109,7 +122,6 @@ function App() {
         <Card title={'Local time'} description={formatDate(realTime)} />
         <Card title={'Local timezone'} description={timezone || ''} />
       </Section>
-      <Card title={'User Agent'} description={navigator?.userAgent} />
 
       <Card
         title={'Connected to online'}

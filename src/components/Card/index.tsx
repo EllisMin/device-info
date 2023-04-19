@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import './styles.scss'
 
+type Description = string | string[] | Object | null | undefined
+
 type Props = {
   title: string
-  description?: string | string[]
+  description?: Description
   initialShow?: boolean
 }
 
-const parseDescription = (str: null | string | undefined | string[]) => {
-  if (!str) {
+const parseDescription = (str: Description) => {
+  if (!str || (typeof str === 'string' && str.includes('undefined'))) {
     return 'No information Available'
   }
   if (Array.isArray(str)) {
@@ -30,7 +32,9 @@ export const Card = (props: Props) => {
     <div className="card">
       <div className="card-header">
         <div className="card-title-collapse-btn">
-          <button className="btn-no-style collapse-btn" onClick={toggleCollapseButton}>
+          <button
+            className="btn-no-style collapse-btn"
+            onClick={toggleCollapseButton}>
             {show ? '▼' : '▶'}
           </button>
           <div className="card-title">{`${title}:`}</div>
