@@ -3,7 +3,7 @@
   flex-direction: column;
   // justify-content: flex-start;
   margin: 1rem;
-  border: 1px solid #888;
+  border: 1px solid #555;
   border-radius: 10px;
   padding: 1rem;
   width: 320px;
@@ -14,6 +14,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    font-size: 0.85rem;
   }
 
   // &-body {}
@@ -26,9 +27,14 @@
   &-description {
     margin-top: 0.5rem;
     white-space: pre-wrap;
+    font-size: 0.85rem;
   }
 
   &-title-collapse-btn {
     display: flex;
   }
 }
+
+$collapse-btn-size: 20px;
+
+// .collapse-btn {}

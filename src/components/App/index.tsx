@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react'
 import { Card } from '../Card'
 import './styles.scss'
 import { isMobile } from 'react-device-detect'
+import { Section } from '../Section'
 
 type Geolocation = {
-  country_code: string
   country_name: string
   city: string
   postal: string
   latitude: string
   longitude: string
-  IPv4: string
-  state: string
+  ip: string
+  region: string
+  org: string
 }
 
 function App() {
@@ -21,13 +22,17 @@ function App() {
   useEffect(() => {
     // Set navigator from window obj
     const navigator = window && window.navigator ? window.navigator : null
+    console.log(`navigator//: `, navigator)
     setNavigator(navigator)
 
     // Get ip
     const fetchIp = async () => {
-      const res = await fetch('https://geolocation-db.com/json/')
-      const data = await res.json()
-      setGeolocation(data)
+      // docs: https://ip-api.com/
+      // const ipRes = await fetch('https://ip-api.com/json/')
+      const ipRes = await fetch('https://ipapi.co/json/')
+      const ipData = await ipRes.json()
+      // console.log(`ipdata//: `, ipData)
+      setGeolocation(ipData)
     }
 
     fetchIp()
@@ -40,20 +45,36 @@ function App() {
         title={'Device type'}
         description={isMobile ? 'Mobile' : 'Desktop (non-mobile)'}
       />
-      {/* <Card
-        title={'App version'}
-        description={navigator?.appVersion}
-      /> */}
-      <Card
-        title={'IP information'}
-        description={`IP address(IPv4): ${geolocation?.IPv4}\nAddress: ${geolocation?.city}, ${geolocation?.state}, ${geolocation?.country_name}\nLatitude & Longitude: ${geolocation?.latitude}, ${geolocation?.longitude}`}
-      />
+      <Section>
+        <Card title={'IP address (IPv4)'} description={`${geolocation?.ip}`} />
+        <Card
+          title={'IP location'}
+          description={`${geolocation?.city}, ${geolocation?.region}, ${geolocation?.country_name} ${geolocation?.postal}`}
+        />
+        <Card
+          title={'Latitude & Longitude'}
+          description={`${geolocation?.latitude}, ${geolocation?.longitude}`}
+        />
+        <Card title={'ISP provider'} description={`${geolocation?.org}`} />
+      </Section>
       <Card title={'User Agent'} description={navigator?.userAgent} />
-      <Card title={'Browser language'} description={navigator?.language} />
+
       <Card
-        title={'Available languages'}
-        description={navigator?.languages as string[]}
+        title={'Connected to online'}
+        description={navigator?.onLine ? 'Yes' : 'No'}
       />
+      <Card
+        title={'Connection type / downlink'}
+        // @ts-ignore
+        description={`${navigator?.connection?.effectiveType} / ${navigator?.connection?.downlink}`}
+      />
+      <Section>
+        <Card title={'Browser language'} description={navigator?.language} />
+        <Card
+          title={'Available languages'}
+          description={navigator?.languages as string[]}
+        />
+      </Section>
     </div>
   )
 }

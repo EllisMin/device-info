@@ -30,8 +30,8 @@ export const Card = (props: Props) => {
     <div className="card">
       <div className="card-header">
         <div className="card-title-collapse-btn">
-          <button className="btn-no-style" onClick={toggleCollapseButton}>
-            {show ? '⬇' : '➡'}
+          <button className="btn-no-style collapse-btn" onClick={toggleCollapseButton}>
+            {show ? '▼' : '▶'}
           </button>
           <div className="card-title">{`${title}:`}</div>
         </div>

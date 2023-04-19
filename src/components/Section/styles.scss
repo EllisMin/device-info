@@ -1,0 +1,8 @@
+$border-width: 1px;
+
+.section {
+  border-top: $border-width dotted #555;
+  border-bottom: $border-width dotted #555;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
