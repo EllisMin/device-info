@@ -5,14 +5,16 @@ import { isMobile } from 'react-device-detect'
 import { Section } from '../Section'
 
 type Geolocation = {
-  country_name: string
+  country: string
   city: string
-  postal: string
-  latitude: string
-  longitude: string
-  ip: string
+  zip: string
+  lat: string
+  lon: string
+  query: string
   region: string
-  org: string
+  regionName: string
+  isp: string
+  timezone: string
 }
 
 function App() {
@@ -28,8 +30,7 @@ function App() {
     // Get ip
     const fetchIp = async () => {
       // docs: https://ip-api.com/
-      const ipRes = await fetch('https://ip-api.com/json/')
-      // const ipRes = await fetch('https://ipapi.co/json/')
+      const ipRes = await fetch(`http://ip-api.com/json/`)
       const ipData = await ipRes.json()
       console.log(`ipdata//: `, ipData)
       setGeolocation(ipData)
@@ -46,19 +47,26 @@ function App() {
         description={isMobile ? 'Mobile' : 'Desktop (non-mobile)'}
       />
       <Section>
-        <Card title={'IP address (IPv4)'} description={`${geolocation?.ip}`} />
+        <Card
+          title={'IP address (IPv4)'}
+          description={`${geolocation?.query}`}
+        />
         <Card
           title={'IP location'}
-          description={`${geolocation?.city}, ${geolocation?.region}, ${geolocation?.country_name} ${geolocation?.postal}`}
+          description={`${geolocation?.city}, ${
+            geolocation?.region || geolocation?.regionName || '?'
+          }, ${geolocation?.country} ${geolocation?.zip}`}
         />
         <Card
           title={'Latitude & Longitude'}
-          description={`${geolocation?.latitude}, ${geolocation?.longitude}`}
+          description={`${geolocation?.lat}, ${geolocation?.lon}`}
         />
-        <Card title={'ISP provider'} description={`${geolocation?.org}`} />
+        <Card title={'ISP provider'} description={`${geolocation?.isp}`} />
+      </Section>
+      <Section>
+        <Card title={'Timezone'} description={`${geolocation?.timezone}`} />
       </Section>
       <Card title={'User Agent'} description={navigator?.userAgent} />
-
       <Card
         title={'Connected to online'}
         description={navigator?.onLine ? 'Yes' : 'No'}
