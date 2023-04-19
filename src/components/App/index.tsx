@@ -102,6 +102,14 @@ function App() {
           title={'Platform description'}
           description={platform.description}
         />
+        <Card
+          title={'Platform manufacturer'}
+          description={platform.manufacturer}
+        />
+        <Card
+          title={'Platform product'}
+          description={platform.product}
+        />
         {/* <Card title={'Platform layout'} description={platform.layout} /> */}
         <Card title={'User Agent'} description={navigator?.userAgent} />
       </Section>
