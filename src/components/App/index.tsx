@@ -15,9 +15,15 @@ type Geolocation = {
   org: string
 }
 
+type Dns = {
+  geo: string
+  ip: string
+}
+
 function App() {
   const [navigator, setNavigator] = useState<Navigator | null>(null)
   const [geolocation, setGeolocation] = useState<Geolocation | null>(null)
+  const [dns, setDns] = useState<Dns | null>()
 
   useEffect(() => {
     // Set navigator from window obj
@@ -28,11 +34,17 @@ function App() {
     // Get ip
     const fetchIp = async () => {
       // docs: https://ip-api.com/
-      const ipRes = await fetch('https://ip-api.com/json/')
-      // const ipRes = await fetch('https://ipapi.co/json/')
+      const ipRes = await fetch('https://ipapi.co/json/')
       const ipData = await ipRes.json()
       console.log(`ipdata//: `, ipData)
       setGeolocation(ipData)
+
+      const dnsRes = await fetch(`https://edns.ip-api.com/json`)
+      const dnsData = await dnsRes.json()
+      console.log(`dnsData//: `, dnsData)
+      if (dnsData?.dns) {
+        setDns(dnsData.dns)
+      }
     }
 
     fetchIp()
@@ -55,7 +67,7 @@ function App() {
           title={'Latitude & Longitude'}
           description={`${geolocation?.latitude}, ${geolocation?.longitude}`}
         />
-        <Card title={'ISP provider'} description={`${geolocation?.org}`} />
+        <Card title={'ISP provider'} description={`${dns?.geo}`} />
       </Section>
       <Card title={'User Agent'} description={navigator?.userAgent} />
 
