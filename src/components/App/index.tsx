@@ -28,10 +28,10 @@ function App() {
     // Get ip
     const fetchIp = async () => {
       // docs: https://ip-api.com/
-      // const ipRes = await fetch('https://ip-api.com/json/')
-      const ipRes = await fetch('https://ipapi.co/json/')
+      const ipRes = await fetch('https://ip-api.com/json/')
+      // const ipRes = await fetch('https://ipapi.co/json/')
       const ipData = await ipRes.json()
-      // console.log(`ipdata//: `, ipData)
+      console.log(`ipdata//: `, ipData)
       setGeolocation(ipData)
     }
 
