@@ -88,7 +88,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <h3>Your device information</h3>
       <Section>
         <Card
