@@ -60,7 +60,7 @@ function App() {
     }, 1000)
 
     const realTimer = setInterval(() => {
-      fetch('http://worldtimeapi.org/api/ip')
+      fetch('https://worldtimeapi.org/api/ip')
         .then((res) => res.json())
         .then((data) => {
           setRealTime(new Date(data.datetime))
